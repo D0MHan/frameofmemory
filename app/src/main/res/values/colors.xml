@@ -10,4 +10,6 @@
     <color name="itemColor">#40398818</color>
     <color name="primaryColor">#398818</color>
     <color name="backgroundColor">#FFFFFFFF</color>
+    <color name="btnColor">#79edff</color>
+
 </resources>

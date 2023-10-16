@@ -32,6 +32,8 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
+        app:backgroundTint="@color/btnColor"
+
         android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
