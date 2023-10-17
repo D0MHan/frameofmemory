@@ -2,6 +2,7 @@ package kr.ac.a1015_3rd
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kr.ac.a1015_3rd.databinding.ActivityMainBinding
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 탭 설정
+        // 탭 설정x1
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 // 탭이 선택 되었을 때
@@ -38,9 +39,9 @@ class MainActivity : AppCompatActivity() {
          */
         TabLayoutMediator(binding.tabLayout, binding.pager) {tab, position ->
             when(position) {
-                0 -> tab.text = "달력"
-                1 -> tab.text = "작성한 일기"
-                2 -> tab.text = "되돌아보기"
+                0 -> tab.icon = ContextCompat.getDrawable(this, R.drawable.cal)
+                1 -> tab.icon = ContextCompat.getDrawable(this, R.drawable.list)
+                2 -> tab.icon = ContextCompat.getDrawable(this, R.drawable.remind)
                 
             }
         }.attach()
