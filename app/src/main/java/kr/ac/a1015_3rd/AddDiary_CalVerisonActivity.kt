@@ -3,9 +3,6 @@ package kr.ac.a1015_3rd
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import kr.ac.a1015_3rd.databinding.ActivityAddDiaryBinding
@@ -19,7 +16,7 @@ import android.graphics.Bitmap.CompressFormat
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.provider.MediaStore
-import android.widget.ImageView
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
@@ -41,7 +38,37 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
     private val FLAG_REQ_CAMERA = 101
     private val FLAG_REA_STORAGE = 102
 
+    private val smileButtons: Array<ImageButton> by lazy {
+        arrayOf(
+            binding.btn1,
+            binding.btn2,
+            binding.btn3,
+            binding.btn4,
+            binding.btn5
+        )
+    }
 
+    private val imgResources: kotlin.collections.Map<ImageButton, Int> by lazy {
+        mapOf(
+            smileButtons[0] to R.drawable.smile1,
+            smileButtons[1] to R.drawable.smile2,
+            smileButtons[2] to R.drawable.smile3,
+            smileButtons[3] to R.drawable.smile4,
+            smileButtons[4] to R.drawable.smile5
+        )
+    }
+
+    private val newImgResources: kotlin.collections.Map<ImageButton, Int> by lazy {
+        mapOf(
+            smileButtons[0] to R.drawable.smile1_1,
+            smileButtons[1] to R.drawable.smile2_2,
+            smileButtons[2] to R.drawable.smile3_3,
+            smileButtons[3] to R.drawable.smile4_4,
+            smileButtons[4] to R.drawable.smile5_5
+        )
+    }
+
+    private var selectedImageResourceId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +77,14 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
         val selectedYear = intent.getIntExtra("selectedYear", 0)
         val selectedMonth = intent.getIntExtra("selectedMonth", 0)
         val selectedDay = intent.getIntExtra("selectedDay", 0)
+
+        for (button in smileButtons) {
+            button.setOnClickListener {
+                selectedImageResourceId = newImgResources[button]
+                // 클릭 시 색상 변경
+                changeButtonImage(button)
+            }
+        }
 
         // 화면이 만들어지면서 저장소 권한을 체크합니다.
         // 권한이 승인되어 있으면 카메라를 호출하는 메소드를 실행합니다.
@@ -60,16 +95,23 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
         // 사용자가 입력한 메모와 선택한 날짜 정보를 이용하여 메모를 데이터베이스에 추가
         binding.okButton2.setOnClickListener {
             val diary = binding.memoEditView2.text.toString()
+            val btnImgFeel = selectedImageResourceId != null
 
-            if (TextUtils.isEmpty(diary)) {
-                Toast.makeText(this, "메모를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            // 입력하지 않았을 때
+            if (TextUtils.isEmpty(diary) || !btnImgFeel) {
+                if (!btnImgFeel) {
+                    Toast.makeText(this, "오늘 기분을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                }
+                if (TextUtils.isEmpty(diary)) {
+                    Toast.makeText(this, "메모를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 val imageByteArray = imageViewToByteArray(binding.imageView)
 
                 if (imageByteArray != null) {
                     val content: String = diary
 
-                    val memo = Memo(id = 0, content, selectedYear, selectedMonth, selectedDay, imageByteArray)
+                    val memo = Memo(id = 0, content, selectedYear, selectedMonth, selectedDay, imageByteArray, selectedImageResourceId)
                     memoViewModel.addMemo(memo)
                     Toast.makeText(this, "추가", Toast.LENGTH_SHORT).show()
                     finish()
@@ -85,6 +127,24 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
         }
 
         binding.cancelButton2.setOnClickListener { finish() }
+    }
+
+    private  fun changeButtonImage(button: ImageButton) {
+        val imgResource = imgResources[button]
+        val newImgResource = newImgResources[button]
+
+        if (imgResource != null && newImgResource != null) {
+            val currentImgResource = button.tag as? Int ?: imgResource
+
+            // 이미지 변경
+            if (currentImgResource == imgResource) {
+                button.setBackgroundResource(newImgResource)
+                button.tag = newImgResource
+            } else {
+                button.setBackgroundResource(imgResource)
+                button.tag = imgResource
+            }
+        }
     }
 
     private fun setViews() {

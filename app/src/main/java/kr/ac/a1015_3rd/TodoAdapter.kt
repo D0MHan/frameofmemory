@@ -3,6 +3,7 @@ package kr.ac.a1015_3rd
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.a1015_3rd.databinding.TodoItemBinding
@@ -16,6 +17,11 @@ class TodoAdapter(private val memoViewModel: MemoViewModel) : RecyclerView.Adapt
         lateinit var memoViewModel: MemoViewModel
 
         val imageView = binding.imageView2
+        val imgFeel = binding.imgFeel
+
+        init {
+            imageView.visibility = View.GONE // imageView를 화면에서 숨김
+        }
 
         fun bind(currentMemo: Memo, memoViewModel: MemoViewModel) {
             binding.memo = currentMemo
@@ -25,6 +31,11 @@ class TodoAdapter(private val memoViewModel: MemoViewModel) : RecyclerView.Adapt
             if (currentMemo.image != null) {
                 val bitmap = BitmapFactory.decodeByteArray(currentMemo.image, 0, currentMemo.image.size)
                 imageView.setImageBitmap(bitmap)
+                imageView.visibility = View.VISIBLE
+            }
+
+            if (currentMemo.selectedImageResourceId != null) {
+                imgFeel.setImageResource(currentMemo.selectedImageResourceId)
             }
 
             binding.deleteButton.setOnClickListener {

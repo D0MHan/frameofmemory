@@ -8,11 +8,11 @@ data class Memo(
 
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0,
-
     val content : String,
     val year : Int,
     val month : Int,
     val day : Int,
-    val image: ByteArray
+    val image: ByteArray,
+    val selectedImageResourceId: Int?
 
 )

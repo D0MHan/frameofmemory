@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 
 /* entities = 사용할 엔티티 선언, version = 엔티티 구조 변경 시 구분해주는 역할
@@ -12,6 +14,7 @@ import androidx.room.RoomDatabase
 abstract class MemoDatabase : RoomDatabase(){
 
     abstract fun memoDao() : MemoDao
+
 
     companion object{
         /* @Volatile = 접근가능한 변수의 값을 cache를 통해 사용하지 않고
@@ -27,10 +30,13 @@ abstract class MemoDatabase : RoomDatabase(){
                         context.applicationContext,
                         MemoDatabase::class.java,
                         "memo_database"
-                    ).build()
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
                 }
             }
             return instance
         }
+
     }
 }
