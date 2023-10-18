@@ -31,7 +31,7 @@ class TodoAdapter(private val memoViewModel: MemoViewModel) : RecyclerView.Adapt
             if (currentMemo.image != null) {
                 val bitmap = BitmapFactory.decodeByteArray(currentMemo.image, 0, currentMemo.image.size)
                 imageView.setImageBitmap(bitmap)
-                imageView.visibility = View.VISIBLE
+                imageView.visibility = View.VISIBLE // 이미지가 있을 때 이미지뷰 보이기
             }
 
             if (currentMemo.selectedImageResourceId != null) {

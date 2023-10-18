@@ -17,11 +17,12 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             app:srcCompat="@drawable/gallery"
-            tools:srcCompat="@drawable/gallery" />
+            android:tag="gal"
+            />
     </LinearLayout>
 
     <LinearLayout

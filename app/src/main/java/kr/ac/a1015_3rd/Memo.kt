@@ -12,7 +12,7 @@ data class Memo(
     val year : Int,
     val month : Int,
     val day : Int,
-    val image: ByteArray,
+    val image: ByteArray?,
     val selectedImageResourceId: Int?
 
 )

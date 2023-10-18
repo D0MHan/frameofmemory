@@ -13,6 +13,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.provider.MediaStore
@@ -69,6 +70,8 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
     }
 
     private var selectedImageResourceId: Int? = null
+    private var selectButton: ImageButton? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +86,14 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
                 selectedImageResourceId = newImgResources[button]
                 // 클릭 시 색상 변경
                 changeButtonImage(button)
+
+                selectButton?.let {
+                    val prevImgResource = imgResources[it]
+                    if (prevImgResource != null) {
+                        it.setBackgroundResource(prevImgResource)
+                    }
+                }
+                selectButton = button
             }
         }
 
@@ -177,6 +188,7 @@ class AddDiary_CalVerisonActivity : AppCompatActivity() {
         }
         return true
     }
+
 
 
 

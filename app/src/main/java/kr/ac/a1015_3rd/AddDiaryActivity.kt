@@ -16,6 +16,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
@@ -26,6 +27,7 @@ import android.widget.SeekBar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.io.ByteArrayOutputStream
+import java.io.Serializable
 
 class AddDiaryActivity : AppCompatActivity() {
 
@@ -75,6 +77,7 @@ class AddDiaryActivity : AppCompatActivity() {
     }
 
     private var selectedImageResourceId: Int? = null
+    private var selectButton: ImageButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +88,14 @@ class AddDiaryActivity : AppCompatActivity() {
                 selectedImageResourceId = newImgResources[button]
                 // 클릭 시 색상 변경
                 changeButtonImage(button)
+
+                selectButton?.let {
+                    val prevImgResource = imgResources[it]
+                    if (prevImgResource != null) {
+                        it.setBackgroundResource(prevImgResource)
+                    }
+                }
+                selectButton = button
             }
         }
 
@@ -111,6 +122,7 @@ class AddDiaryActivity : AppCompatActivity() {
                 // 이미지를 바이트 배열로 변환
                val imageByteArray = imageViewToByteArray(binding.imageView)
 
+
                 if (imageByteArray != null) {
                     val content: String = diary
 
@@ -125,7 +137,8 @@ class AddDiaryActivity : AppCompatActivity() {
                     memoViewModel.addMemo(memo)
                     Toast.makeText(this, "추가", Toast.LENGTH_SHORT).show()
                     finish()
-                } else {
+                }
+                else {
                     Toast.makeText(this, "사진을 저장해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -199,6 +212,24 @@ class AddDiaryActivity : AppCompatActivity() {
         }
         return null
     }
+
+//    fun imageViewToByteArray(imageView: ImageView): ByteArray? {
+//        if(!imgChanged) {
+//            return null
+//        }
+//        val drawable = imageView.drawable
+//        if (drawable is BitmapDrawable) {
+//            val bitmap = drawable.bitmap
+//            val stream = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//            return stream.toByteArray()
+//        }
+//        return null
+//    }
+
+
+
+
 
     private fun openGallery() {
         // 저장소 권한이 있는지 확인
