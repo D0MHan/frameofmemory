@@ -8,8 +8,8 @@
     tools:context=".StartActivity">
 
     <ImageView
-        android:layout_width="306dp"
-        android:layout_height="226dp"
+        android:layout_width="421dp"
+        android:layout_height="363dp"
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
