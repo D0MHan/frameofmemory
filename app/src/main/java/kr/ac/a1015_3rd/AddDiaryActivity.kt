@@ -21,6 +21,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
@@ -121,6 +122,8 @@ class AddDiaryActivity : AppCompatActivity() {
             } else {
                 // 이미지를 바이트 배열로 변환
                val imageByteArray = imageViewToByteArray(binding.imageView)
+                Log.d("qqq","${imageByteArray}")
+
 
 
                 if (imageByteArray != null) {
@@ -139,6 +142,8 @@ class AddDiaryActivity : AppCompatActivity() {
                     finish()
                 }
                 else {
+
+
                     Toast.makeText(this, "사진을 저장해주세요.", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -20,9 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/gallery"
-            android:tag="gal"
-            />
+
+            android:tag="gal" />
     </LinearLayout>
 
     <LinearLayout
